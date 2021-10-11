@@ -11,16 +11,20 @@ const StyledDescription = styled.div`
 
 const City = ({ cities }) => {
   const { city } = useParams();
-  const cityDetails = cities.find((item) => item.slug === city);
-  const { description, title } = cityDetails;
+  const cityDetails = cities?.find((item) => item.slug === city);
+  const { description = "", title = "" } = cityDetails;
 
   return (
     <Container>
-      <NavLink to="/cities">&larr; Back to cities</NavLink>
-      <h1>{title}</h1>
-      <StyledDescription>
-        {documentToReactComponents(description.json)}
-      </StyledDescription>
+      {cityDetails && (
+        <>
+          <NavLink to="/cities">&larr; Back to cities</NavLink>
+          <h1>{title}</h1>
+          <StyledDescription>
+            {documentToReactComponents(description.json)}
+          </StyledDescription>
+        </>
+      )}
     </Container>
   );
 };
