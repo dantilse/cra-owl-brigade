@@ -1,18 +1,26 @@
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router";
+import styled from "styled-components";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { Container } from "../components/molecules";
-import { cities } from "../data";
 
-const City = () => {
+const StyledDescription = styled.div`
+  line-height: 1.5;
+  font-size: 125%;
+`;
+
+const City = ({ cities }) => {
   const { city } = useParams();
   const cityDetails = cities.find((item) => item.slug === city);
-  const { name, state } = cityDetails;
-  const cityDisplayName = name && state ? `${name}, ${state}` : "Unknown city";
+  const { description, title } = cityDetails;
 
   return (
     <Container>
       <NavLink to="/cities">&larr; Back to cities</NavLink>
-      <p>This is the city page for {cityDisplayName}.</p>
+      <h1>{title}</h1>
+      <StyledDescription>
+        {documentToReactComponents(description.json)}
+      </StyledDescription>
     </Container>
   );
 };
