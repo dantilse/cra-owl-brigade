@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Container } from "../components/molecules";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -28,25 +29,27 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleLogIn}>
-      <input
-        type="text"
-        id="username"
-        value={email}
-        onChange={handleOnChangeEmail}
-        placeholder="User name"
-      />
-      <input
-        type="password"
-        id="password"
-        value={password}
-        onChange={handleOnChangePassword}
-        placeholder="Password"
-      />
-      <button type="submit" onClick={handleLogIn}>
-        Log in
-      </button>
-    </form>
+    <Container>
+      <form onSubmit={handleLogIn}>
+        <input
+          type="text"
+          id="username"
+          value={email}
+          onChange={handleOnChangeEmail}
+          placeholder="User name"
+        />
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={handleOnChangePassword}
+          placeholder="Password"
+        />
+        <button type="submit" onClick={handleLogIn}>
+          Log in
+        </button>
+      </form>
+    </Container>
   );
 };
 
