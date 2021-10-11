@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Container } from "../components/molecules";
-import { cities } from "../data";
 
 const StyledList = styled.ul`
   display: grid;
@@ -35,28 +35,40 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const PageOne = () => {
+const LandingPage = ({ cities }) => {
   // create component for flight info? (nonstop boolean, duration string, departure city, average price)
+
+  const [sortedCities, setSortedCities] = useState([]);
+
+  useEffect(() => {
+    if (cities) {
+      const tempSortedCities = cities.sort((a, b) =>
+        a.title > b.title ? 1 : -1
+      );
+      setSortedCities(tempSortedCities);
+    }
+  }, [cities]);
 
   return (
     <Container>
       <h1>Cities</h1>
-      {cities?.length > 0 && (
+      {!cities && <h1>Loading...</h1>}
+      {sortedCities?.length > 0 ? (
         <StyledList>
-          {cities?.map((city) => {
-            const { name, slug, state } = city;
+          {sortedCities?.map((city) => {
+            const { title, slug } = city;
             return (
-              <StyledListItem key={name}>
-                <StyledLink to={`/cities/${slug}`}>
-                  {name}, {state}
-                </StyledLink>
+              <StyledListItem key={title}>
+                <StyledLink to={`/cities/${slug}`}>{title}</StyledLink>
               </StyledListItem>
             );
           })}
         </StyledList>
+      ) : (
+        <p>No cities to display.</p>
       )}
     </Container>
   );
 };
 
-export default PageOne;
+export default LandingPage;
