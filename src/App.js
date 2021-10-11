@@ -1,11 +1,14 @@
 import { AppRouter } from "./components";
 import { AuthContextProvider } from "./firebase";
+import ApolloProviderWithClient from "./graphql/ApolloProviderWithClient";
 import "./App.css";
 
 function App() {
   return (
     <AuthContextProvider>
-      <AppRouter />
+      <ApolloProviderWithClient>
+        <AppRouter />
+      </ApolloProviderWithClient>
     </AuthContextProvider>
   );
 }

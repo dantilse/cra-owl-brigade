@@ -8,9 +8,13 @@ import {
 } from "../pages";
 import { Header, SecureRoute, UnsecureRoute } from "../components";
 import { useAuthState } from "../firebase";
+import useContentful, { citiesList } from "../graphql";
 
 const AppRouter = () => {
   const { isAuthenticated } = useAuthState();
+  const { response: citiesResponse } = useContentful(citiesList);
+
+  const cities = citiesResponse?.citiesCollection?.items;
 
   return (
     <Router>
@@ -20,10 +24,10 @@ const AppRouter = () => {
           <LoginPage />
         </UnsecureRoute>
         <SecureRoute path="/cities" exact>
-          <LandingPage />
+          <LandingPage cities={cities} />
         </SecureRoute>
         <SecureRoute path="/cities/:city" exact>
-          <CityPage />
+          <CityPage cities={cities} />
         </SecureRoute>
         <SecureRoute path="/suggestions" exact>
           <SuggestionsPage />
