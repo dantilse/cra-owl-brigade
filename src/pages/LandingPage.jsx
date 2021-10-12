@@ -20,7 +20,6 @@ const StyledListItem = styled.li`
 
 const StyledLink = styled(Link)`
   display: block;
-  padding: 15px;
   color: inherit;
   text-decoration: none;
   transition: all 150ms ease-in-out;
@@ -30,15 +29,66 @@ const StyledLink = styled(Link)`
   }
 
   &:hover {
-    color: #61dafb;
     background-color: #f4f5f6;
   }
 `;
 
+const StyledH3 = styled.h3`
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 15px;
+`;
+
+const StyledWeatherRow = styled.div`
+  padding: 15px;
+  color: #454545;
+
+  & + & {
+    padding-top: 0;
+  }
+
+  > span {
+    display: inline-block;
+    font-size: 80%;
+
+    ~ span {
+      margin-left: 15px;
+    }
+  }
+`;
+
+const months = [
+  { value: "jan", label: "January" },
+  { value: "feb", label: "February" },
+  { value: "mar", label: "March" },
+  { value: "apr", label: "April" },
+  { value: "may", label: "May" },
+  { value: "jun", label: "June" },
+  { value: "jul", label: "July" },
+  { value: "aug", label: "August" },
+  { value: "sep", label: "September" },
+  { value: "oct", label: "October" },
+  { value: "nov", label: "November" },
+  { value: "dec", label: "December" },
+];
+
 const LandingPage = ({ cities }) => {
   // create component for flight info? (nonstop boolean, duration string, departure city, average price)
-
   const [sortedCities, setSortedCities] = useState([]);
+  const [month, setMonth] = useState(
+    months.find((month) => month.value === "apr")
+  );
+  const [departureCity, setDepartureCity] = useState("mci");
+
+  const handleOnChangeMonth = (e) => {
+    const newMonth = months.find((month) => month.value === e.target.value);
+
+    setMonth(newMonth);
+  };
+
+  const handleOnChangeDepartureCity = (e) => {
+    setDepartureCity(e.target.value);
+  };
 
   useEffect(() => {
     if (cities) {
@@ -52,14 +102,51 @@ const LandingPage = ({ cities }) => {
   return (
     <Container>
       <h1>Cities</h1>
+      <form style={{ marginBottom: "15px" }}>
+        <select onChange={handleOnChangeMonth} value={month.value}>
+          {months.map((month) => (
+            <option key={month.value} value={month.value}>
+              {month.label}
+            </option>
+          ))}
+        </select>
+        <select onChange={handleOnChangeDepartureCity} value={departureCity}>
+          <option value="aus">Austin</option>
+          <option value="mci">Kansas City</option>
+        </select>
+      </form>
       {!cities && <h1>Loading...</h1>}
       {sortedCities?.length > 0 ? (
         <StyledList>
           {sortedCities?.map((city) => {
-            const { title, slug } = city;
+            const { title, slug, weather, flights } = city;
             return (
               <StyledListItem key={title}>
-                <StyledLink to={`/cities/${slug}`}>{title}</StyledLink>
+                <StyledLink to={`/cities/${slug}`}>
+                  <StyledH3>{title}</StyledH3>
+                  {weather && (
+                    <StyledWeatherRow>
+                      <span title={`Average high temperature for ${month}`}>
+                        ☀️&nbsp;&nbsp;{weather?.[month?.value]?.high}
+                      </span>
+                      <span>❄️&nbsp;&nbsp;{weather?.[month?.value]?.low}</span>
+                      <span>🌧️&nbsp;&nbsp;{weather?.[month?.value]?.rain}</span>
+                    </StyledWeatherRow>
+                  )}
+                  {flights && (
+                    <StyledWeatherRow>
+                      <span title="Earliest arrival time">
+                        🛬&nbsp;&nbsp;{flights[departureCity].arrival}
+                      </span>
+                      <span title="Latest departure time">
+                        🛫&nbsp;&nbsp;{flights[departureCity].departure}
+                      </span>
+                      <span title="Average flight cost">
+                        💰&nbsp;&nbsp;{flights[departureCity].price}
+                      </span>
+                    </StyledWeatherRow>
+                  )}
+                </StyledLink>
               </StyledListItem>
             );
           })}

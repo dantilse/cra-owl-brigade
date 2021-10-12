@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 import {
   CityPage,
   LandingPage,
+  LoadingPage,
   LoginPage,
   PageNotFound,
   SuggestionsPage,
@@ -11,12 +12,14 @@ import { useAuthState } from "../firebase";
 import useContentful, { citiesList } from "../graphql";
 
 const AppRouter = () => {
-  const { isAuthenticated } = useAuthState();
+  const { isAuthenticated, isLoading } = useAuthState();
   const { response: citiesResponse } = useContentful(citiesList);
 
   const cities = citiesResponse?.citiesCollection?.items;
 
-  return (
+  return isLoading ? (
+    <LoadingPage />
+  ) : (
     <Router>
       <Header isAuthenticated={isAuthenticated} />
       <Switch>

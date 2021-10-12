@@ -29,5 +29,10 @@ export const AuthContextProvider = (props) => {
 
 export const useAuthState = () => {
   const auth = useContext(AuthContext);
-  return { ...auth, isAuthenticated: auth?.user != null };
+  return {
+    error: auth?.error,
+    isAuthenticated: auth?.user != null,
+    isLoading: auth?.user === undefined,
+    user: auth?.user,
+  };
 };
