@@ -7,6 +7,8 @@ query GetCities {
       }
       slug
       title
+      weather
+      flights
     }
   }
 }
