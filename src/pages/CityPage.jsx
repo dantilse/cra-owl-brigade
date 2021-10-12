@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useParams } from "react-router";
+import { Redirect, useParams } from "react-router";
 import styled from "styled-components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { Container } from "../components/molecules";
@@ -11,11 +11,8 @@ const StyledDescription = styled.div`
   font-size: 125%;
 `;
 
-const City = ({ cities }) => {
-  const { city } = useParams();
-  const cityDetails = cities?.find((item) => item.slug === city);
+const CityDetails = ({ cityDetails }) => {
   const { description = "", title = "" } = cityDetails;
-
   const { error, isLoading, payload } = useOpenTripMap();
 
   useEffect(() => {
@@ -34,6 +31,17 @@ const City = ({ cities }) => {
         </>
       )}
     </Container>
+  );
+};
+
+const City = ({ cities }) => {
+  const { city } = useParams();
+  const cityDetails = cities?.find((item) => item.slug === city);
+
+  return !!cityDetails ? (
+    <CityDetails cityDetails={cityDetails} />
+  ) : (
+    <Redirect to="/cities" />
   );
 };
 
