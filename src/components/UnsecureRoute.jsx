@@ -6,7 +6,7 @@ const UnsecureRoute = ({ children, exact, isAuthenticated, path }) => {
       {children}
     </Route>
   ) : (
-    <Redirect to="/cities" />
+    <Redirect to="/" />
   );
 };
 

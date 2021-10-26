@@ -36,12 +36,13 @@ const CityDetails = ({ cityDetails }) => {
 
 const City = ({ cities }) => {
   const { city } = useParams();
+  console.log({ city });
   const cityDetails = cities?.find((item) => item.slug === city);
 
   return !!cityDetails ? (
     <CityDetails cityDetails={cityDetails} />
   ) : (
-    <Redirect to="/cities" />
+    <Redirect to="/" />
   );
 };
 

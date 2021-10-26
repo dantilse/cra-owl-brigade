@@ -36,7 +36,10 @@ const StyledNavLink = styled(NavLink)`
 const AuthenticatedNav = () => {
   return (
     <nav>
-      <StyledNavLink activeClassName="active" to="/cities" exact>
+      <StyledNavLink activeClassName="active" to="/" exact>
+        Home
+      </StyledNavLink>
+      <StyledNavLink activeClassName="active" to="/cities">
         Cities
       </StyledNavLink>
       <StyledNavLink activeClassName="active" to="/suggestions">
@@ -62,7 +65,7 @@ const Header = ({ isAuthenticated }) => {
             <LogOutButton />
           </>
         ) : (
-          <StyledNavLink activeClassName="active" to="/" exact>
+          <StyledNavLink activeClassName="active" to="/login" exact>
             Login
           </StyledNavLink>
         )}
