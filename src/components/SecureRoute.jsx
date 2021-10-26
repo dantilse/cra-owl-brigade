@@ -6,7 +6,7 @@ const SecureRoute = ({ children, exact, isAuthenticated, path }) => {
       {children}
     </Route>
   ) : (
-    <Redirect to="/" />
+    <Redirect to="/login" />
   );
 };
 
