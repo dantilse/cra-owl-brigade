@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import {
+  CalendarPage,
   CityPage,
   LandingPage,
   LoadingPage,
   LoginPage,
   PageNotFound,
+  ProfilePage,
   SuggestionsPage,
 } from "../pages";
 import { Header, SecureRoute, UnsecureRoute } from "../components";
@@ -14,7 +16,6 @@ import useContentful, { citiesList } from "../graphql";
 const AppRouter = () => {
   const { isAuthenticated, isLoading } = useAuthState();
   const { response: citiesResponse } = useContentful(citiesList);
-
   const cities = citiesResponse?.citiesCollection?.items;
 
   return isLoading ? (
@@ -23,19 +24,33 @@ const AppRouter = () => {
     <Router>
       <Header isAuthenticated={isAuthenticated} />
       <Switch>
-        <UnsecureRoute path="/" exact>
+        <UnsecureRoute isAuthenticated={isAuthenticated} path="/" exact>
           <LoginPage />
         </UnsecureRoute>
-        <SecureRoute path="/cities" exact>
+        <SecureRoute isAuthenticated={isAuthenticated} path="/cities" exact>
           <LandingPage cities={cities} />
         </SecureRoute>
-        <SecureRoute path="/cities/:city" exact>
+        <SecureRoute isAuthenticated={isAuthenticated} path="/calendar" exact>
+          <CalendarPage cities={cities} />
+        </SecureRoute>
+        <SecureRoute
+          isAuthenticated={isAuthenticated}
+          path="/cities/:city"
+          exact
+        >
           <CityPage cities={cities} />
         </SecureRoute>
-        <SecureRoute path="/suggestions" exact>
+        <SecureRoute isAuthenticated={isAuthenticated} path="/profile" exact>
+          <ProfilePage />
+        </SecureRoute>
+        <SecureRoute
+          isAuthenticated={isAuthenticated}
+          path="/suggestions"
+          exact
+        >
           <SuggestionsPage />
         </SecureRoute>
-        <SecureRoute>
+        <SecureRoute isAuthenticated={isAuthenticated}>
           <PageNotFound />
         </SecureRoute>
       </Switch>

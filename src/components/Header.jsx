@@ -5,7 +5,6 @@ import { Container, LogOutButton } from "./molecules";
 const StyledHeader = styled.header`
   padding-top: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #ccc;
 `;
 
 const StyledContainer = styled(Container)`
@@ -18,6 +17,7 @@ const StyledNavLink = styled(NavLink)`
   padding: 10px;
   color: inherit;
   text-decoration: none;
+  border-bottom: 1px solid transparent;
   transition: all 150ms ease-in-out;
 
   & + & {
@@ -25,7 +25,7 @@ const StyledNavLink = styled(NavLink)`
   }
 
   &.active {
-    color: #61dafb;
+    border-bottom-color: #61dafb;
   }
 
   &:hover {
@@ -41,6 +41,12 @@ const AuthenticatedNav = () => {
       </StyledNavLink>
       <StyledNavLink activeClassName="active" to="/suggestions">
         Suggestions
+      </StyledNavLink>
+      <StyledNavLink activeClassName="active" to="/calendar">
+        Calendar
+      </StyledNavLink>
+      <StyledNavLink activeClassName="active" to="/profile">
+        Profile
       </StyledNavLink>
     </nav>
   );
