@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Container } from "../components/molecules";
+import { airports, months } from "../data";
 
 const StyledList = styled.ul`
   display: grid;
@@ -57,21 +58,6 @@ const StyledWeatherRow = styled.div`
   }
 `;
 
-const months = [
-  { value: "jan", label: "January" },
-  { value: "feb", label: "February" },
-  { value: "mar", label: "March" },
-  { value: "apr", label: "April" },
-  { value: "may", label: "May" },
-  { value: "jun", label: "June" },
-  { value: "jul", label: "July" },
-  { value: "aug", label: "August" },
-  { value: "sep", label: "September" },
-  { value: "oct", label: "October" },
-  { value: "nov", label: "November" },
-  { value: "dec", label: "December" },
-];
-
 const LandingPage = ({ cities }) => {
   // create component for flight info? (nonstop boolean, duration string, departure city, average price)
   const [sortedCities, setSortedCities] = useState([]);
@@ -111,8 +97,14 @@ const LandingPage = ({ cities }) => {
           ))}
         </select>
         <select onChange={handleOnChangeDepartureCity} value={departureCity}>
-          <option value="aus">Austin</option>
-          <option value="mci">Kansas City</option>
+          {airports.map((airport) => {
+            const { label, value } = airport;
+            return (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            );
+          })}
         </select>
       </form>
       {!cities && <h1>Loading...</h1>}
@@ -133,19 +125,23 @@ const LandingPage = ({ cities }) => {
                       <span>🌧️&nbsp;&nbsp;{weather?.[month?.value]?.rain}</span>
                     </StyledWeatherRow>
                   )}
-                  {flights && (
-                    <StyledWeatherRow>
-                      <span title="Earliest arrival time">
-                        🛬&nbsp;&nbsp;{flights[departureCity].arrival}
-                      </span>
-                      <span title="Latest departure time">
-                        🛫&nbsp;&nbsp;{flights[departureCity].departure}
-                      </span>
-                      <span title="Average flight cost">
-                        💰&nbsp;&nbsp;{flights[departureCity].price}
-                      </span>
-                    </StyledWeatherRow>
-                  )}
+                  <StyledWeatherRow>
+                    {flights?.[departureCity] ? (
+                      <>
+                        <span title="Earliest arrival time">
+                          🛬&nbsp;&nbsp;{flights[departureCity].arrival}
+                        </span>
+                        <span title="Latest departure time">
+                          🛫&nbsp;&nbsp;{flights[departureCity].departure}
+                        </span>
+                        <span title="Average flight cost">
+                          💰&nbsp;&nbsp;{flights[departureCity].price}
+                        </span>
+                      </>
+                    ) : (
+                      <small>No airline data to display</small>
+                    )}
+                  </StyledWeatherRow>
                 </StyledLink>
               </StyledListItem>
             );

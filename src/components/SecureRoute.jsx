@@ -1,8 +1,6 @@
 import { Redirect, Route } from "react-router-dom";
-import { useAuthState } from "../firebase";
 
-const SecureRoute = ({ children, exact, path }) => {
-  const { isAuthenticated } = useAuthState();
+const SecureRoute = ({ children, exact, isAuthenticated, path }) => {
   return isAuthenticated ? (
     <Route path={path} exact={exact}>
       {children}
