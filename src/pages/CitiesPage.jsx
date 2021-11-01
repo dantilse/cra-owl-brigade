@@ -6,7 +6,7 @@ import { airports, months } from "../data";
 
 const StyledList = styled.ul`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minMax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minMax(320px, 1fr));
   grid-gap: 30px;
   list-style: none;
   margin: 0;
@@ -21,6 +21,7 @@ const StyledListItem = styled.li`
 
 const StyledLink = styled(Link)`
   display: block;
+  min-height: 100%;
   color: inherit;
   text-decoration: none;
   transition: all 150ms ease-in-out;
