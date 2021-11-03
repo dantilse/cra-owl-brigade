@@ -11,7 +11,6 @@ import {
   SuggestionsPage,
 } from "../pages";
 import { Header, SecureRoute, UnsecureRoute } from ".";
-import { Container } from "./molecules";
 import { useAuthState } from "../firebase";
 import useContentful, { citiesList } from "../graphql";
 
