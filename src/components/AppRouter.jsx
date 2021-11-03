@@ -55,11 +55,6 @@ const AppRouter = () => {
         >
           <CityPage cities={cities} />
         </SecureRoute>
-        <SecureRoute path="/success" isAuthenticated={isAuthenticated} exact>
-          <Container>
-            <p>Success page</p>
-          </Container>
-        </SecureRoute>
         <SecureRoute isAuthenticated={isAuthenticated}>
           <PageNotFound />
         </SecureRoute>
