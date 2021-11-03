@@ -10,7 +10,8 @@ import {
   ProfilePage,
   SuggestionsPage,
 } from "../pages";
-import { Header, SecureRoute, UnsecureRoute } from "../components";
+import { Header, SecureRoute, UnsecureRoute } from ".";
+import { Container } from "./molecules";
 import { useAuthState } from "../firebase";
 import useContentful, { citiesList } from "../graphql";
 
@@ -53,6 +54,11 @@ const AppRouter = () => {
           exact
         >
           <CityPage cities={cities} />
+        </SecureRoute>
+        <SecureRoute path="/success" isAuthenticated={isAuthenticated} exact>
+          <Container>
+            <p>Success page</p>
+          </Container>
         </SecureRoute>
         <SecureRoute isAuthenticated={isAuthenticated}>
           <PageNotFound />
