@@ -4,7 +4,7 @@ const ProfilePage = () => {
   return (
     <Container>
       <h1>Profile page</h1>
-      <form action="/success" name="contact" method="POST" data-netlify="true">
+      <form name="contact" method="POST" data-netlify="true">
         <p>
           <label>
             Your Name: <input type="text" name="name" />
