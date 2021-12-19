@@ -42,7 +42,7 @@ const AuthenticatedNav = () => {
       <StyledNavLink activeClassName="active" to="/cities">
         Cities
       </StyledNavLink>
-      <StyledNavLink activeClassName="active" to="/suggestions">
+      {/* <StyledNavLink activeClassName="active" to="/suggestions">
         Suggestions
       </StyledNavLink>
       <StyledNavLink activeClassName="active" to="/calendar">
@@ -50,7 +50,7 @@ const AuthenticatedNav = () => {
       </StyledNavLink>
       <StyledNavLink activeClassName="active" to="/profile">
         Profile
-      </StyledNavLink>
+      </StyledNavLink> */}
     </nav>
   );
 };
