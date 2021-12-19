@@ -43,6 +43,7 @@ const StyledPanelHeading = styled.h3`
 
 const StyledFlightsLink = styled.a`
   display: inline-flex;
+  align-items: flex-start;
   padding: 5px;
   margin-left: -5px;
   color: inherit;
@@ -203,7 +204,7 @@ const CitiesPage = ({ cities }) => {
                         <span title="Average flight cost">
                           💰&nbsp;&nbsp;{flights[departureCity].price}
                         </span>
-                        <Arrow />
+                        {flights?.[departureCity]?.url && <Arrow />}
                       </StyledFlightsLink>
                     ) : (
                       <small>No airline data to display</small>
